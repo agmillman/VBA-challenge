@@ -33,7 +33,7 @@ Function PopulateSummaryTable()
     Tickers = WorksheetFunction.Unique(Range("A2:A" & LastRecord))      'Populate Tickers array with unique ticker values
     
     NumberOfTickers = UBound(Tickers, 1)                  'Count number of unique Tickers
-    Range("I2:I" & u + 1).Value = Tickers   '+1 because starting at row 2 and subtracting 1 for array index
+    Range("I2:I" & NumberOfTickers + 1).Value = Tickers   '+1 because starting at row 2 and subtracting 1 for array index
     
     TickerIndex = 0
     NextTickerStartRow = 0
@@ -43,9 +43,9 @@ Function PopulateSummaryTable()
     For I = 1 To LastRecord
         If Cells(I + 2, 1).Value <> Cells(I + 1, 1).Value Then      'End of current ticker records triggers calculations and populating the summary table
             TickerIndex = TickerIndex + 1
-            QuarterlyChange = Cells(I + 1, 6).Value - Cells(I - RowCount + 1, 6).Value
+            QuarterlyChange = Cells(I + 1, 6).Value - Cells(I - RowCount + 1, 3).Value
             Cells(TickerIndex + 1, 10).Value = QuarterlyChange
-            PercentChange = QuarterlyChange / Cells(I - RowCount + 1, 6).Value
+            PercentChange = QuarterlyChange / Cells(I - RowCount + 1, 3).Value
             Cells(TickerIndex + 1, 11).Value = PercentChange
             TotalStockVolume = 0
             For j = I - RowCount To I
